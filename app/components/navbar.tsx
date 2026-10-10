@@ -2,16 +2,37 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import gsap from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+
+gsap.registerPlugin(ScrollToPlugin);
 
 const links = ["Properties", "About", "Journal"];
 
 export default function Page() {
     const [menuOpen, setMenuOpen] = useState(false);
 
+    const handleScroll = (
+        e: React.MouseEvent<HTMLAnchorElement>,
+        targetId: string
+    ) => {
+        e.preventDefault();
+        setMenuOpen(false);
+
+        gsap.to(window, {
+            duration: 0.5,
+            scrollTo: {
+                y: `#${targetId}`,
+                offsetY: 30,
+            },
+            ease: "expo.inOut",
+            overwrite: "auto",
+        });
+    };
+
     return (
         <header className="absolute inset-x-0 top-0 z-50 w-full">
             <nav className="relative flex w-full items-center justify-between px-5 py-4 sm:px-8">
-
                 {/* Logo */}
                 <a href="/" className="shrink-0">
                     <Image
@@ -30,6 +51,9 @@ export default function Page() {
                         <li key={item}>
                             <a
                                 href={`#${item.toLowerCase()}`}
+                                onClick={(e) =>
+                                    handleScroll(e, item.toLowerCase())
+                                }
                                 className="nav-link relative inline-block py-2 text-white"
                             >
                                 {item}
@@ -42,6 +66,7 @@ export default function Page() {
                 {/* Desktop CTA */}
                 <a
                     href="#contact"
+                    onClick={(e) => handleScroll(e, "contact")}
                     className="hidden shrink-0 p-2 font-(--font-heading) text-white underline decoration-1 underline-offset-4 transition-all duration-300 hover:underline-offset-8 min-[900px]:block"
                 >
                     Let's talk ↗
@@ -59,7 +84,7 @@ export default function Page() {
                 </button>
             </nav>
 
-            {/* Mobile dropdown — outside the nav flex layout */}
+            {/* Mobile dropdown */}
             {menuOpen && (
                 <div className="bg-black/35 px-6 py-6 min-[900px]:hidden">
                     <ul className="flex flex-col gap-4 font-(--font-heading)">
@@ -67,7 +92,9 @@ export default function Page() {
                             <li key={item}>
                                 <a
                                     href={`#${item.toLowerCase()}`}
-                                    onClick={() => setMenuOpen(false)}
+                                    onClick={(e) =>
+                                        handleScroll(e, item.toLowerCase())
+                                    }
                                     className="block py-2 text-white"
                                 >
                                     {item}
@@ -79,7 +106,7 @@ export default function Page() {
 
                     <a
                         href="#contact"
-                        onClick={() => setMenuOpen(false)}
+                        onClick={(e) => handleScroll(e, "contact")}
                         className="mt-5 inline-block text-white underline underline-offset-4"
                     >
                         Let's talk ↗
@@ -89,8 +116,9 @@ export default function Page() {
 
             {/* Divider */}
             <div
-                className={`mx-5 border-b border-white/30 sm:mx-10 ${menuOpen ? "hidden min-[900px]:block" : ""
-                    }`}
+                className={`mx-5 border-b border-white/30 sm:mx-10 ${
+                    menuOpen ? "hidden min-[900px]:block" : ""
+                }`}
             />
         </header>
     );

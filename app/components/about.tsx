@@ -114,6 +114,7 @@ export default function Page() {
 
     return (
         <section
+            id="about"
             ref={sectionRef}
             className="flex min-h-screen w-full flex-col justify-center bg-brand px-5 py-16 sm:px-8 md:px-8 md:py-20"
         >
