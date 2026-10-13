@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { ArrowUp, ArrowUpRight , X , Menu } from "lucide-react";
 
 gsap.registerPlugin(ScrollToPlugin);
 
@@ -72,9 +73,8 @@ export default function Page() {
 
     // Smooth symmetrical navbar resize
     useEffect(() => {
-        if (!headerRef.current || !navRef.current) return;
+        if (!navRef.current) return;
 
-        const header = headerRef.current;
         const nav = navRef.current;
 
         const animateNavbar = () => {
@@ -84,6 +84,10 @@ export default function Page() {
 
             // Mobile: never shrink the navbar
             if (isMobile) {
+                nav.style.removeProperty("width");
+                nav.style.removeProperty("padding-left");
+                nav.style.removeProperty("padding-right");
+
                 gsap.to(nav, {
                     borderRadius: scrolled ? "999px" : "0px",
 
@@ -119,30 +123,24 @@ export default function Page() {
             nav.style.paddingLeft = previousPaddingLeft;
             nav.style.paddingRight = previousPaddingRight;
 
-            const expandedWidth = Math.min(header.clientWidth, 1400);
-
             gsap.to(nav, {
                 width: scrolled
                     ? collapsedWidth
-                    : expandedWidth,
+                    : "100%",
 
                 borderRadius: scrolled ? "999px" : "0px",
 
-                paddingTop: scrolled ? 12 : 16,
-                paddingBottom: scrolled ? 12 : 16,
+                paddingTop: scrolled ? 6 : 8,
+                paddingBottom: scrolled ? 6 : 8,
                 paddingLeft: scrolled ? 28 : 32,
                 paddingRight: scrolled ? 28 : 32,
-
-                backgroundColor: scrolled
-                    ? "rgba(23, 23, 23, 0.85)"
-                    : "rgba(23, 23, 23, 0)",
 
                 borderColor: scrolled
                     ? "rgba(255, 255, 255, 0.2)"
                     : "rgba(255, 255, 255, 0)",
 
                 backdropFilter: scrolled
-                    ? "blur(24px) saturate(150%)"
+                    ? "blur(10px) saturate(200%)"
                     : "blur(0px)",
 
                 boxShadow: scrolled
@@ -242,13 +240,23 @@ export default function Page() {
     return (
         <header
             ref={headerRef}
-            className="fixed inset-x-0 top-10 z-50 w-full px-3 pt-2 sm:px-5"
+            className="fixed inset-x-0 top-10 z-50 w-full sm:px-6"
         >
             <nav
                 ref={navRef}
-                className={`mx-auto flex w-full max-w-[1400px] items-center
-    justify-between gap-4 px-4 py-4 sm:px-8
-    ${scrolled ? "rounded-2xl border border-white/20 shadow-lg" : "border border-transparent bg-transparent"}`}
+                className={`
+            mx-3 flex w-[calc(100%-1.5rem)] max-w-[1400px]
+            sm:mx-auto sm:w-full
+            items-center justify-between gap-4
+            rounded-2xl px-5 sm:px-8
+            min-[900px]:grid min-[900px]:grid-cols-[1fr_auto_1fr]
+            transition-colors duration-300
+
+            ${scrolled
+                        ? "border border-white/20 bg-black/30  shadow-lg backdrop-blur-xl sm:mt-4"
+                        : "border border-transparent bg-transparent"
+                    }
+        `}
             >
                 {/* Logo */}
                 <a
@@ -258,11 +266,11 @@ export default function Page() {
                 >
                     <Image
                         src="/images/agency-logo.png"
-                        width={200}
-                        height={200}
+                        width={100}
+                        height={100}
                         alt="North & Pine"
                         priority
-                        className="h-auto w-32 sm:w-40 md:w-48"
+                        className="h-auto w-24 sm:w-40 md:w-48 min-[900px]:w-36"
                     />
                 </a>
 
@@ -301,12 +309,14 @@ export default function Page() {
                     data-nav-item
                     className="hidden justify-self-end shrink-0 p-2
                         font-(--font-heading) text-white
+                        min-[900px]:mr-4
                         underline decoration-1 underline-offset-4
                         transition-all duration-300
                         hover:underline-offset-8
-                        min-[900px]:block"
+                        min-[900px]:flex   min-[900px]:items-center gap-2"
                 >
-                    Let's talk ↗
+                    Contact us
+                    <ArrowUpRight className="size-4 " />
                 </a>
 
                 {/* Mobile Hamburger */}
@@ -319,7 +329,7 @@ export default function Page() {
                         text-2xl leading-none text-white
                         min-[900px]:hidden"
                 >
-                    {menuOpen ? "✕" : "☰"}
+                    {menuOpen ? <X size={15}/> : <Menu size={15}/>}
                 </button>
             </nav>
 
@@ -358,10 +368,11 @@ export default function Page() {
                             href="#contact"
                             onClick={(e) => handleScroll(e, "contact")}
                             data-mobile-link
-                            className="block py-3 text-white underline
-                                decoration-1 underline-offset-4"
+                            className="py-3 text-white underline
+                                decoration-1 underline-offset-4 flex items-center gap-2 mr-4"
                         >
-                            Let's talk ↗
+                            Let's talk
+                            <ArrowUpRight className="size-4 " />
                         </a>
                     </li>
                 </ul>

@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ArrowUpRight } from "lucide-react";
 
 export default function Page() {
     const heroRef = useRef<HTMLDivElement>(null);
@@ -118,7 +119,7 @@ export default function Page() {
                         <span className="inline-flex items-center gap-1 text-lg font-light">
                             Let's talk
                             <span className="transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1">
-                                ↗
+                                <ArrowUpRight className="size-4 lg:size-6"/>
                             </span>
                         </span>
 
