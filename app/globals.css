@@ -41,3 +41,16 @@ body {
   transform-origin: left;
 }
 
+/* ::-webkit-scrollbar {
+    display: none;
+} */
+
+/* Firefox */
+/* html {
+    scrollbar-width: none;
+} */
+
+/* IE and older Edge */
+/* html {
+    -ms-overflow-style: none;
+} */

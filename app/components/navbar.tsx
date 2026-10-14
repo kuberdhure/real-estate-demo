@@ -4,11 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import { ArrowUp, ArrowUpRight , X , Menu } from "lucide-react";
+import {  ArrowUpRight , X , Menu } from "lucide-react";
+import Link from "next/link";
+
 
 gsap.registerPlugin(ScrollToPlugin);
 
-const links = ["Properties", "About", "Journal"];
+const links = ["Properties", "About", "Testimonials"];
 
 export default function Page() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -226,11 +228,13 @@ export default function Page() {
         e.preventDefault();
         setMenuOpen(false);
 
+        const offset = targetId === "testimonials" ? -160 : 0;
+
         gsap.to(window, {
             duration: 0.8,
             scrollTo: {
                 y: `#${targetId}`,
-                offsetY: 30,
+                offsetY: offset,
             },
             ease: "expo.inOut",
             overwrite: "auto",
@@ -259,8 +263,9 @@ export default function Page() {
         `}
             >
                 {/* Logo */}
-                <a
-                    href="/"
+                <Link
+                    href="#hero"
+                    onClick={(e) => handleScroll(e, "hero")}
                     className="shrink-0 justify-self-start"
                     data-nav-item
                 >
@@ -272,7 +277,7 @@ export default function Page() {
                         priority
                         className="h-auto w-24 sm:w-40 md:w-48 min-[900px]:w-36"
                     />
-                </a>
+                </Link>
 
                 {/* Desktop Navigation */}
                 <ul
@@ -281,7 +286,7 @@ export default function Page() {
                 >
                     {links.map((item) => (
                         <li key={item} data-nav-item>
-                            <a
+                            <Link
                                 href={`#${item.toLowerCase()}`}
                                 onClick={(e) =>
                                     handleScroll(e, item.toLowerCase())
@@ -297,13 +302,13 @@ export default function Page() {
                                         scale-x-0 bg-white transition-transform
                                         duration-300 hover:scale-x-100"
                                 />
-                            </a>
+                            </Link>
                         </li>
                     ))}
                 </ul>
 
                 {/* Desktop CTA */}
-                <a
+                <Link
                     href="#contact"
                     onClick={(e) => handleScroll(e, "contact")}
                     data-nav-item
@@ -317,7 +322,7 @@ export default function Page() {
                 >
                     Contact us
                     <ArrowUpRight className="size-4 " />
-                </a>
+                </Link>
 
                 {/* Mobile Hamburger */}
                 <button
@@ -347,7 +352,7 @@ export default function Page() {
                 <ul className="flex flex-col gap-4 py-6 font-(--font-heading)">
                     {links.map((item) => (
                         <li key={item}>
-                            <a
+                            <Link
                                 data-mobile-link
                                 href={`#${item.toLowerCase()}`}
                                 onClick={(e) =>
@@ -356,7 +361,7 @@ export default function Page() {
                                 className="block py-2 text-white"
                             >
                                 {item}
-                            </a>
+                            </Link>
 
                             <div className="border-b border-white/20" />
                         </li>
@@ -364,7 +369,7 @@ export default function Page() {
 
                     {/* Mobile CTA */}
                     <li>
-                        <a
+                        <Link
                             href="#contact"
                             onClick={(e) => handleScroll(e, "contact")}
                             data-mobile-link
@@ -373,7 +378,7 @@ export default function Page() {
                         >
                             Let's talk
                             <ArrowUpRight className="size-4 " />
-                        </a>
+                        </Link>
                     </li>
                 </ul>
             </div>

@@ -76,7 +76,7 @@ export default function Page() {
                     </div>
                 </div>
                 <div data-header-reveal className="flex items-center justify-start gap-1 text-xs whitespace-nowrap sm:justify-center sm:text-sm lg:text-lg">
-                    <a className="underline underline-offset-6">
+                    <a className="underline underline-offset-6" href="#">
                         View All Properties
                     </a>
                     <ArrowUpRight className="size-4 sm:size-5 lg:size-[25px]" />

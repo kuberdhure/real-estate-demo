@@ -59,6 +59,7 @@ export default function Page() {
 
     return (
         <div
+            id="hero"
             ref={heroRef}
             className="relative h-screen w-full overflow-hidden"
         >
