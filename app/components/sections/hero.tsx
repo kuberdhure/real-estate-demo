@@ -3,7 +3,10 @@
 import Image from "next/image";
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { ScrollToPlugin } from "gsap/ScrollToPlugin";
 import { ArrowUpRight } from "lucide-react";
+
+gsap.registerPlugin(ScrollToPlugin);
 
 export default function Page() {
     const heroRef = useRef<HTMLDivElement>(null);
@@ -11,6 +14,18 @@ export default function Page() {
     const headingRef = useRef<HTMLHeadingElement>(null);
     const ctaRef = useRef<HTMLDivElement>(null);
     const eyebrowRef = useRef<HTMLParagraphElement>(null);
+
+    const handleExploreHomes = () => {
+        gsap.to(window, {
+            duration: 0.9,
+            scrollTo: {
+                y: "#properties",
+                offsetY: 0,
+            },
+            ease: "expo.inOut",
+            overwrite: "auto",
+        });
+    };
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -104,7 +119,11 @@ export default function Page() {
                     className="mt-5 flex flex-wrap items-center gap-6 sm:gap-8"
                 >
                     {/* Primary CTA */}
-                    <button className="self-start bg-brand px-5 py-3 text-black transition-colors duration-300 hover:bg-green-700 hover:text-white">
+                    <button
+                        type="button"
+                        onClick={handleExploreHomes}
+                        className="self-start bg-brand px-5 py-3 text-black transition-colors duration-300 hover:bg-green-700 hover:text-white"
+                    >
                         Explore Homes
                     </button>
 

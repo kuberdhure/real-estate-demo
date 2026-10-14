@@ -4,13 +4,13 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
-import {  ArrowUpRight , X , Menu } from "lucide-react";
+import { ArrowUpRight, X, Menu } from "lucide-react";
 import Link from "next/link";
 
 
 gsap.registerPlugin(ScrollToPlugin);
 
-const links = ["Properties", "About", "Testimonials"];
+const links = ["About", "Properties", "Testimonials"];
 
 export default function Page() {
     const [menuOpen, setMenuOpen] = useState(false);
@@ -334,7 +334,7 @@ export default function Page() {
                         text-2xl leading-none text-white
                         min-[900px]:hidden"
                 >
-                    {menuOpen ? <X size={15}/> : <Menu size={15}/>}
+                    {menuOpen ? <X size={15} /> : <Menu size={15} />}
                 </button>
             </nav>
 
